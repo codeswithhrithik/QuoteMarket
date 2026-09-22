@@ -37,7 +37,10 @@ import {
   X,
   Zap,
   Trash2,
-  Ban
+  Ban,
+  MessageCircle,
+  Phone,
+  Mail
 } from 'lucide-react';
 import { adminAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -658,6 +661,7 @@ export default function AdminDashboard() {
                 <thead>
                   <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                     <th className="py-3 px-4">User / Account</th>
+                    <th className="py-3 px-4">Contact & WhatsApp</th>
                     <th className="py-3 px-4">Subscription Plan</th>
                     <th className="py-3 px-4">Add / Extend Days</th>
                     <th className="py-3 px-4">PDF Credits</th>
@@ -669,7 +673,7 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-slate-100 font-medium">
                   {filteredUsers.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-slate-400">
+                      <td colSpan={8} className="py-8 text-center text-slate-400">
                         No registered users found matching the filter "{userFilter}" and query "{userSearch}"
                       </td>
                     </tr>
@@ -717,6 +721,56 @@ export default function AdminDashboard() {
                                   </span>
                                 )}
                               </div>
+                            </div>
+                          </td>
+
+                          {/* Contact & WhatsApp */}
+                          <td className="py-3.5 px-4">
+                            <div className="space-y-1">
+                              {u.companyPhone ? (
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                  <a
+                                    href={`tel:${u.companyPhone}`}
+                                    className="font-mono text-[11px] font-bold text-slate-800 hover:text-blue-600 transition-colors inline-flex items-center gap-1"
+                                    title="Call user"
+                                  >
+                                    <Phone className="w-3 h-3 text-slate-400" />
+                                    <span>{u.companyPhone}</span>
+                                  </a>
+                                  {(() => {
+                                    const digits = String(u.companyPhone).replace(/[^0-9]/g, '');
+                                    const waNum = digits.length === 10 ? '91' + digits : digits;
+                                    const waMsg = encodeURIComponent(
+                                      `Hello ${u.name || ''}, this is Hrithik from QuoteMarket.\n\n` +
+                                      (u.isPlanDue
+                                        ? `Your subscription plan is currently due. Please scan your QR code or reach out to us to reactivate.`
+                                        : `Thank you for being a valued QuoteMarket customer! You have ${u.daysRemaining} days left in your plan. Let us know if you need any assistance.`)
+                                    );
+                                    return (
+                                      <a
+                                        href={`https://wa.me/${waNum}?text=${waMsg}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold rounded-md shadow-xs active:scale-95 transition-all"
+                                        title="Chat on WhatsApp"
+                                      >
+                                        <MessageCircle className="w-3 h-3 fill-current" />
+                                        <span>WhatsApp</span>
+                                      </a>
+                                    );
+                                  })()}
+                                </div>
+                              ) : (
+                                <span className="text-[10px] text-slate-400 italic block">No phone provided</span>
+                              )}
+                              <a
+                                href={`mailto:${u.email}?subject=QuoteMarket%20Support`}
+                                className="inline-flex items-center gap-1 text-[10px] text-blue-600 hover:underline"
+                                title="Send email"
+                              >
+                                <Mail className="w-2.5 h-2.5" />
+                                <span>{u.email}</span>
+                              </a>
                             </div>
                           </td>
 

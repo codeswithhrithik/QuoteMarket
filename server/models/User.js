@@ -144,6 +144,10 @@ const UserSchema = new mongoose.Schema({
   suspendReason: {
     type: String,
     default: ''
+  },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
