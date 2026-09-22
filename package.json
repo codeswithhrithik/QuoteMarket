@@ -1,0 +1,26 @@
+{
+  "name": "quotecraft-mern",
+  "version": "1.0.0",
+  "description": "Full-stack MERN Quotation Maker & Manager with multi-template styling, catalog integration, auto amount in words, and WhatsApp/PDF sharing.",
+  "scripts": {
+    "dev": "node server/server.js",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "npm --prefix server run dev",
+    "build": "npm --prefix client run build",
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "mern",
+    "quotation-generator",
+    "invoice",
+    "pdf",
+    "whatsapp-share",
+    "react",
+    "express",
+    "mongodb",
+    "tailwind"
+  ],
+  "author": "",
+  "license": "ISC"
+}

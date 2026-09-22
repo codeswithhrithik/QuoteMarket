@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment and sensitive keys
+.env
+server/.env
+*.env
+*.env.local
+
+# Build artifacts
+client/dist/
+
+# Local databases and logs
+server/data/
+*.log
+npm-debug.log*
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
